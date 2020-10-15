@@ -1,4 +1,3 @@
-const { Octokit } = require("@octokit/rest");
 const octokit = new Octokit();
 
 const owner = 'uccser';
