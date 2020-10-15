@@ -10,9 +10,11 @@
         'dthm': 'dthm4kaiako',
     };
 
-    var workflowRuns = octokit.actions.listRepoWorkflows({
+    var workflowRuns = octokit.actions.listWorkflowRuns({
         owner: owner,
         repo: repos.csfg,
+        workflow_file_name: 'action.yaml',
+        per_page: 1
     });
     console.log(workflowRuns);
 </script>
