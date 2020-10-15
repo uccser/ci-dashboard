@@ -1,0 +1,8 @@
+{
+    "name": "ci-dashboard",
+    "version": "0.0.1",
+    "homepage": "https://uccser.github.io/ci-dashboard/",
+    "dependencies": {
+        "@octokit/rest": "18.0.6"
+    }
+}
