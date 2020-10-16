@@ -8,15 +8,18 @@
         'codewof': 'codewof',
         'dthm': 'dthm4kaiako',
     };
-    (async () => {
-        var latestWorkflowRun = await octokit.actions.listWorkflowRuns({
+
+    const latestWorkflowRun = octokit.actions
+        .listWorkflowRuns({
             owner: owner,
             repo: repos.csfg,
             workflow_id: 2989095,
             per_page: 1
-        });
-        latestWorkflowRun.then(value => {
-            console.log(value);
         })
-    })
+        .then(({ data }) => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.log(error);
+        });
 </script>
