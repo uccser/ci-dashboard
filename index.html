@@ -8,9 +8,11 @@
         'codewof': 'codewof',
         'dthm': 'dthm4kaiako',
     };
-    var workflowRuns = octokit.actions.listRepoWorkflows({
+    var latestWorkflowRun = octokit.actions.listWorkflowRuns({
         owner: owner,
-        repo: repos.csfg,
+        repo: 'repo-name',
+        workflow_file_name: 'file-name.yaml',
+        per_page: 1
     });
-    console.log(workflowRuns);
+    console.log(latestWorkflowRun);
 </script>
