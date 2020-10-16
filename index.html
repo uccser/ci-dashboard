@@ -10,8 +10,8 @@
     };
     var latestWorkflowRun = octokit.actions.listWorkflowRuns({
         owner: owner,
-        repo: 'repo-name',
-        workflow_file_name: 'file-name.yaml',
+        repo: repos.csfg,
+        workflow_file_name: 'action.yaml',
         per_page: 1
     });
     console.log(latestWorkflowRun);
