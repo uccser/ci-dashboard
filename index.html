@@ -8,7 +8,7 @@
         'codewof': 'codewof',
         'dthm': 'dthm4kaiako',
     };
-    var latestWorkflowRun = octokit.actions.listWorkflowRuns({
+    var latestWorkflowRun = await octokit.actions.listWorkflowRuns({
         owner: owner,
         repo: repos.csfg,
         workflow_id: 2989095,
