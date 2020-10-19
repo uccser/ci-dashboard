@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "en-US" }}">
+  <head>
+  <meta charset="UTF-8">
+
+{% seo %}
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#157878">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+  </head>
+  {% include octokit-script.html %}
+  <body>
+    <div id="page-container">
+      <div id="content-wrap">
+        <header class="page-header" role="banner">
+          {% include title.html %}
+            <!-- <div id="banner-title">
+                <span>UCCSER |</span> Dashboard
+            </div> -->
+          <!-- <h1 class="project-name">{{ page.title | default: site.title | default: site.github.repository_name }}</h1> -->
+          <!-- <h2 class="project-tagline">{{ page.description | default: site.description | default: site.github.project_tagline }}</h2> -->
+        </header>
+
+        <main id="content" class="main-content" role="main">
+          {{ content }}
+          {% include card.html %}
+        </main>
+      </div>
+    </div>
+    {% include footer.html %}
+  </body>
+</html>
