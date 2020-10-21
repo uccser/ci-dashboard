@@ -68,3 +68,35 @@ body {
   border-radius: 4px;
   overflow: hidden;
 }
+
+#last-commit,
+#commit-hash {
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+}
+
+.status-passed {
+  color: #28a745;
+  border: 1px solid #28a745;
+  background-color: transparent;
+  font-weight: 400;
+}
+
+
+.status-running {
+  color: #007bff;
+  border: 1px solid #007bff;
+  background-color: transparent;
+  font-weight: 400;
+}
+
+.status-failed {
+  color: #dc3545;
+  border: 1px solid #dc3545;
+  background-color: transparent;
+  font-weight: 400;
+}
+
+// ------------ general ------------
+.octicon {
+  vertical-align: middle;
+}

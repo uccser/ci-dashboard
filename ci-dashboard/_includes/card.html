@@ -1,20 +1,20 @@
-<div class="build-card text-center">
+<div class="build-card text-left">
   <div class="row">
     <!-- <p id="repo-name"></p>
     <p id="branch"></p>
     <p id="commit-hash"></p>
     <p id="conclusion"></p> -->
     <div class="col-3">
-      <small>Status</small>
+      <small>Project name</small>
     </div>
     <div class="col-3">
+      <small>Last commit</small>
+    </div>
+    <div class="col-2">
       <small>Triggerer</small>
     </div>
     <div class="col-2">
-      <small>Commit</small>
-    </div>
-    <div class="col-2">
-      <small>Jobs</small>
+      <small>Status</small>
     </div>
     <div class="col-2">
       <small>Time</small>
@@ -22,19 +22,30 @@
   </div>
   <div class="row">
     <div class="col-3">
-      <small id="status"></small>
+      <small id="repo-name"></small>
     </div>
     <div class="col-3">
+      <div class="row">
+        <div class="col-12">
+          {% octicon git-branch height:16 class:"left" fill: "#606c71" %}
+          <small id="last-commit" class="d-inline"></small>
+        </div>
+        <div class="col-12">
+          {% octicon git-commit height:16 class:"left" fill: "#606c71" %}
+          <small><a id="commit-hash" class="d-inline"></a></small>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-2">
       <small id="triggerer"></small>
     </div>
     <div class="col-2">
-      <small id="commit-hash"></small>
+      <span id="status" class="badge"></span>
     </div>
     <div class="col-2">
-      <small></small>
-    </div>
-    <div class="col-2">
-      <small></small>
+      {% octicon stopwatch height:16 class:"left" fill: "#606c71" %}
+      <small id="time"></small>
     </div>
   </div>
 </div>

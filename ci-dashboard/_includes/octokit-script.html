@@ -9,7 +9,14 @@
     'dthm': 'dthm4kaiako',
   };
 
-  const latestWorkflowRun = octokit.actions
+  const interpretStatus = {
+    'success': 'passed',
+    'pending': 'running',
+    'error': 'failed',
+    'failure': 'failed'
+  }
+
+  octokit.actions
     .listWorkflowRuns({
       owner: owner,
       repo: repos.csfg,
@@ -17,17 +24,40 @@
       per_page: 1
     })
     .then(({ data }) => {
-      // workflowObject = data.workflow_runs[0];
-      console.log(data.workflow_runs[0]);
-      // console.log(workflowObject);
-      // document.getElementById("repo-name").append(repos.csfg);
-      // document.getElementById("branch").append(data.workflow_runs[0].head_branch);
-      document.getElementById("commit-hash").append((data.workflow_runs[0].head_commit.id).substring(0, 6));
-      document.getElementById("status").append(data.workflow_runs[0].status);
-      document.getElementById("triggerer").append(data.workflow_runs[0].head_commit.author.name);
-      // document.getElementById("conclusion").append(data.workflow_runs[0].conclusion);
+      return data.workflow_runs[0]
+    }).then((workflow) => {
+      console.log(workflow);
+      document.getElementById("repo-name").append(repos.csfg);
+      document.getElementById("last-commit").append(workflow.head_branch);
+      document.getElementById("commit-hash").append((workflow.head_commit.id).substring(0, 6));
+      document.getElementById("commit-hash").href = getCommitURL(repos.csfg, workflow.head_commit.id);
+      document.getElementById("triggerer").append(workflow.head_commit.author.name);
+      var status = interpretStatus[workflow.conclusion]
+      document.getElementById("status").innerHTML = status;
+      document.getElementById("status").classList.add('status-' + status);
+      var lastUpdated = new Date(workflow.updated_at)
+      var createdAt = new Date(workflow.created_at)
+      var executionTime = lastUpdated - createdAt;
+      displayExecutionTime(executionTime);   
     })
     .catch(error => {
       console.log(error);
     });
+
+    function displayExecutionTime(executionTime) {
+      var hours = Math.floor(executionTime / 3600e3);
+      var minutes = Math.floor((executionTime % 3600e3) / 60e3);
+      var seconds = Math.floor(((executionTime % 3600e3) % 60e3) / 1e3);
+      if (hours) {
+        document.getElementById("time").innerHTML = `${hours}h ${minutes}m ${seconds}s`;
+      } else if (minutes) {
+        document.getElementById("time").innerHTML = `${minutes}m ${seconds}s`;
+      } else if (seconds) {
+        document.getElementById("time").innerHTML = `${seconds}s`;
+      }
+    }
+
+    function getCommitURL(repoName, commitHash) {
+      return `https://github.com/uccser/${repoName}/commit/${commitHash}`
+    }
 </script>

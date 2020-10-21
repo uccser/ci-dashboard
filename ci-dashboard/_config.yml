@@ -33,6 +33,7 @@ github_username:  jekyll
 theme: jekyll-theme-cayman
 plugins:
   - jekyll-feed
+  - jekyll-octicons
 
 sass:
   sass_dir: _sass
