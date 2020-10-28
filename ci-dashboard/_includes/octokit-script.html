@@ -4,66 +4,98 @@
   const owner = 'uccser';
   var repos = {
     'csfg': 'cs-field-guide',
-    'csu': 'cs-unplugged',
-    'codewof': 'codewof',
     'dthm': 'dthm4kaiako',
   };
+
+    // 'csu': 'cs-unplugged',
+    // 'codewof': 'codewof',
 
   const interpretStatus = {
     'success': 'passed',
     'pending': 'running',
+    'null': 'running',
     'error': 'failed',
-    'failure': 'failed'
+    'failure': 'failed',
   }
 
-  octokit.actions
-    .listWorkflowRuns({
+  async function APICall(repoName) {
+    const workflow = await octokit.actions.listWorkflowRuns({
       owner: owner,
-      repo: repos.csfg,
-      workflow_id: 2989095,
+      repo: repoName,
+      workflow_id: "action.yaml",
       per_page: 1
-    })
-    .then(({ data }) => {
-      return data.workflow_runs[0]
-    }).then((workflow) => {
-      console.log(workflow);
-      document.getElementById("repo-name").append(repos.csfg);
-      document.getElementById("last-commit").append(workflow.head_branch);
-      document.getElementById("commit-hash").append((workflow.head_commit.id).substring(0, 6));
-      document.getElementById("commit-hash").href = getCommitURL(repos.csfg, workflow.head_commit.id);
-      document.getElementById("triggerer").append(workflow.head_commit.author.name);
-      var status = interpretStatus[workflow.conclusion]
-      document.getElementById("status").innerHTML = status;
-      document.getElementById("status").classList.add('status-' + status);
-      var lastUpdated = new Date(workflow.updated_at)
-      var createdAt = new Date(workflow.created_at)
-      var executionTime = lastUpdated - createdAt;
-      displayExecutionTime(executionTime);
-      // document.getElementById('your-div').addEventListener('click', function() {
-      //   location.href = 'http://your-url.com'
-      // }, false);
-    })
-    .catch(error => {
-      console.log(error);
     });
+    return workflow;
+  }
 
-    // Displays how long the workflow took to run
-    function displayExecutionTime(executionTime) {
-      var hours = Math.floor(executionTime / 3600e3);
-      var minutes = Math.floor((executionTime % 3600e3) / 60e3);
-      var seconds = Math.floor(((executionTime % 3600e3) % 60e3) / 1e3);
-      if (hours) {
-        document.getElementById("time").innerHTML = `${hours}h ${minutes}m ${seconds}s`;
-      } else if (minutes) {
-        document.getElementById("time").innerHTML = `${minutes}m ${seconds}s`;
-      } else if (seconds) {
-        document.getElementById("time").innerHTML = `${seconds}s`;
-      } else {
-        document.getElementById("time").innerHTML = "–";
-      }
-    }
+  async function makeAPICalls() {
+    let csfgResult = APICall(repos.csfg);
+    let dthmResult = APICall(repos.dthm);
+    let values = await Promise.all([csfgResult, dthmResult]);
 
-    function getCommitURL(repoName, commitHash) {
-      return `https://github.com/uccser/${repoName}/commit/${commitHash}`
+    var csfgWorkflow = values[0].data.workflow_runs[0];
+    var dthmWorkflow = values[1].data.workflow_runs[0];
+    console.log(csfgWorkflow);
+    console.log(dthmWorkflow);
+    displayData('csfg', csfgWorkflow);
+    displayData('dthm', dthmWorkflow);
+  }
+
+  makeAPICalls()
+  .catch((e) =>
+    console.log(e)
+  );
+
+  function displayData(repoShortName, workflow) {
+    document.getElementById(`${repoShortName}-repo-name`).append(repos[repoShortName]);
+    document.getElementById(`${repoShortName}-last-commit`).append(workflow.head_branch);
+    document.getElementById(`${repoShortName}-commit-hash`).append((workflow.head_commit.id).substring(0, 6));
+    document.getElementById(`${repoShortName}-commit-hash`).href = getCommitURL(repos[repoShortName], workflow.head_commit.id);
+    // Show users avatar under 'Triggerer' heading
+    var triggererElement = document.getElementById(`${repoShortName}-triggerer`);
+    var imgDiv = document.createElement("IMG");
+    var username = workflow.head_commit.author.name;
+    imgDiv.src = `https://github.com/${username}.png?size=24`
+    imgDiv.classList.add('mx-auto', 'd-block', 'avatar');
+    triggererElement.append(imgDiv);
+    // Update status
+    var status = interpretStatus[workflow.conclusion]
+    document.getElementById(`${repoShortName}-status`).innerHTML = status;
+    document.getElementById(`${repoShortName}-status`).classList.add('status-' + status);
+    // Update execution time
+    var lastUpdated = new Date(workflow.updated_at)
+    var createdAt = new Date(workflow.created_at)
+    var executionTime = lastUpdated - createdAt;
+    displayExecutionTime(repoShortName, executionTime);
+    // Make table row link to the workflow on GitHub
+    document.getElementById(`${repoShortName}-row`).addEventListener('click', function() {
+      location.href = workflow.url.replace("api.", "").replace("repos", "");
+    }, false);
+  }
+
+  // Displays how long the workflow took to run
+  function displayExecutionTime(repoShortName, executionTime) {
+    var timeID = `${repoShortName}-time`;
+    var hours = Math.floor(executionTime / 3600e3);
+    var minutes = Math.floor((executionTime % 3600e3) / 60e3);
+    var seconds = Math.floor(((executionTime % 3600e3) % 60e3) / 1e3);
+    if (hours) {
+      document.getElementById(timeID).innerHTML = `${hours}h ${minutes}m ${seconds}s`;
+    } else if (minutes) {
+      document.getElementById(timeID).innerHTML = `${minutes}m ${seconds}s`;
+    } else if (seconds) {
+      document.getElementById(timeID).innerHTML = `${seconds}s`;
+    } else {
+      document.getElementById(timeID).innerHTML = "–";
     }
+  }
+
+  function getCommitURL(repoName, commitHash) {
+    return `https://github.com/uccser/${repoName}/commit/${commitHash}`
+  }
+
+  function getTriggererAvatar(username) {
+    imgDiv = document.createElement("IMG");
+    imgDiv.src = `https://github.com/${username}.png?size=24`
+  }
 </script>

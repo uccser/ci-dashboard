@@ -3,37 +3,67 @@
     <tr>
       <th scope="col">Project name</th>
       <th scope="col">Last commit</th>
-      <th scope="col">Triggerer</th>
-      <th scope="col">Status</th>
+      <th scope="col" class="text-center">Triggerer</th>
+      <th scope="col" class="text-center">Status</th>
       <th scope="col">Time</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
+    <!-- CSFG DATA -->
+    <tr id="csfg-row">
       <td>
-        <small id="repo-name"></small>
+        <small id="csfg-repo-name"></small>
       </td>
       <td>
         <div class="row">
           <div class="col-12">
             {% octicon git-branch height:16 class:"left" fill: "#606c71" %}
-            <small id="last-commit" class="d-inline"></small>
+            <small id="csfg-last-commit" class="code-font d-inline"></small>
           </div>
           <div class="col-12">
             {% octicon git-commit height:16 class:"left" fill: "#606c71" %}
-            <small><a id="commit-hash" class="d-inline"></a></small>
+            <small><a id="csfg-commit-hash" class="code-font d-inline"></a></small>
           </div>
         </div>
       </td>
       <td>
-        <small id="triggerer"></small>
+        <small id="csfg-triggerer"></small>
       </td>
-      <td>
-        <small id="status" class="badge"></small>
+      <td class="text-center">
+        <small id="csfg-status" class="badge"></small>
       </td>
       <td>
         {% octicon stopwatch height:16 class:"left" fill: "#606c71" %}
-        <small id="time"></small>
+        <small id="csfg-time"></small>
+      </td>
+    </tr>
+
+    <!-- DTHM DATA -->
+    <tr id="dthm-row">
+      <td>
+        <small id="dthm-repo-name"></small>
+      </td>
+      <td>
+        <div class="row">
+          <div class="col-12">
+            {% octicon git-branch height:16 class:"left" fill: "#606c71" %}
+            <small id="dthm-last-commit" class="code-font d-inline"></small>
+          </div>
+          <div class="col-12">
+            {% octicon git-commit height:16 class:"left" fill: "#606c71" %}
+            <small><a id="dthm-commit-hash" class="code-font d-inline"></a></small>
+          </div>
+        </div>
+      </td>
+      <td>
+        <small id="dthm-triggerer"></small>
+      </td>
+      <td class="text-center">
+        <small id="dthm-status" class="badge"></small>
+      </td>
+      <td>
+        {% octicon stopwatch height:16 class:"left" fill: "#606c71" %}
+        <small id="dthm-time"></small>
       </td>
     </tr>
   </tbody>

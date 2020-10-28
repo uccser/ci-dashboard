@@ -58,19 +58,8 @@ body {
   }
 }
 
-// ------------ card.html ------------
-.build-card {
-  box-shadow: 0 3px 8px 0 rgba(0,0,0,0.03);
-  border: 1px solid #C1C1C1;
-  margin-bottom: 20px;
-  padding: 10px 15px;
-  box-sizing: border-box;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-#last-commit,
-#commit-hash {
+// ------------ table.html ------------
+.code-font {
   font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
 }
 
@@ -94,6 +83,19 @@ body {
   border: 1px solid #dc3545;
   background-color: transparent;
   font-weight: 400;
+}
+
+tr {
+  cursor: pointer;
+}
+
+.avatar {
+  border-radius: 50%!important;
+  display: inline-block;
+  overflow: hidden;
+  line-height: 1;
+  vertical-align: middle;
+  text-align: center;
 }
 
 // ------------ general ------------
