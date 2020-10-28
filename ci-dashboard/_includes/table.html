@@ -1,0 +1,40 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Project name</th>
+      <th scope="col">Last commit</th>
+      <th scope="col">Triggerer</th>
+      <th scope="col">Status</th>
+      <th scope="col">Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <small id="repo-name"></small>
+      </td>
+      <td>
+        <div class="row">
+          <div class="col-12">
+            {% octicon git-branch height:16 class:"left" fill: "#606c71" %}
+            <small id="last-commit" class="d-inline"></small>
+          </div>
+          <div class="col-12">
+            {% octicon git-commit height:16 class:"left" fill: "#606c71" %}
+            <small><a id="commit-hash" class="d-inline"></a></small>
+          </div>
+        </div>
+      </td>
+      <td>
+        <small id="triggerer"></small>
+      </td>
+      <td>
+        <small id="status" class="badge"></small>
+      </td>
+      <td>
+        {% octicon stopwatch height:16 class:"left" fill: "#606c71" %}
+        <small id="time"></small>
+      </td>
+    </tr>
+  </tbody>
+</table>

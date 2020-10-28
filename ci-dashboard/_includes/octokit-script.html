@@ -38,12 +38,16 @@
       var lastUpdated = new Date(workflow.updated_at)
       var createdAt = new Date(workflow.created_at)
       var executionTime = lastUpdated - createdAt;
-      displayExecutionTime(executionTime);   
+      displayExecutionTime(executionTime);
+      // document.getElementById('your-div').addEventListener('click', function() {
+      //   location.href = 'http://your-url.com'
+      // }, false);
     })
     .catch(error => {
       console.log(error);
     });
 
+    // Displays how long the workflow took to run
     function displayExecutionTime(executionTime) {
       var hours = Math.floor(executionTime / 3600e3);
       var minutes = Math.floor((executionTime % 3600e3) / 60e3);
@@ -54,6 +58,8 @@
         document.getElementById("time").innerHTML = `${minutes}m ${seconds}s`;
       } else if (seconds) {
         document.getElementById("time").innerHTML = `${seconds}s`;
+      } else {
+        document.getElementById("time").innerHTML = "–";
       }
     }
 
