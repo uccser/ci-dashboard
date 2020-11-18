@@ -1,6 +1,8 @@
 ---
 ---
 
+@import "{{ site.theme }}";
+
 // ------------ default.html ------------
 #page-container {
   position: relative;
@@ -27,7 +29,6 @@ body {
 .page-header {
   background-color: #cc0011;
   background-image: none;
-  color: white;
   @media screen and (min-width: 64em) {
     padding: 2rem 4rem;
   }
